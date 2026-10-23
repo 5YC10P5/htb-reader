@@ -133,7 +133,23 @@
     const label = isShell ? "Terminal example shown on screen." : "Code example shown on screen.";
     if (settings.codeMode !== "short") return label;
 
-    const commands = lines.filter((l) => PROMPT_RE.test(l)).map((l) => l.replace(PROMPT_RE, ""));
+    // HTB marks prompts with .shell-symbol, which also catches prompts with no
+    // space before the command ("user@htb[/htb]$sudo nmap").
+    const prompts = [...pre.querySelectorAll(".shell-symbol")].map((s) => s.textContent.trim()).filter(Boolean);
+    const commands = [];
+    for (const line of lines) {
+      if (PROMPT_RE.test(line)) {
+        commands.push(line.replace(PROMPT_RE, ""));
+        continue;
+      }
+      for (const p of prompts) {
+        const at = line.indexOf(p);
+        if (at >= 0 && at < 80) {
+          commands.push(line.slice(at + p.length).trim());
+          break;
+        }
+      }
+    }
     if (commands.length) {
       if (commands.length > 2 || commands.join(" ").length > 150) return label;
       const hasOutput = lines.length > commands.length;
