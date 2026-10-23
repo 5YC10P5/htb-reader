@@ -37,7 +37,7 @@ announces code blocks instead of reading every symbol in them.
 
 - **Firefox** 142 or newer
 - **Node.js** 20 or newer, free from <https://nodejs.org> (choose the LTS version)
-- About **500 MB** of disk space (the voice engine plus the 160 MB voice model)
+- About **600 MB** of disk space (the voice engine plus the 160 MB voice model)
 - A reasonably modern CPU. No graphics card is needed; a laptop with an Intel Core i5 (12th gen) is fast enough.
 
 Windows, macOS and Linux are supported.
@@ -244,6 +244,9 @@ npm run build        # package the extension as dist/htb-reader-<version>.xpi
 After changing the extension, reload it from `about:debugging` with the
 **Reload** button next to HTB Reader.
 
+On Windows, stop the voice server before running `npm install`; Windows locks the
+voice engine's files while the server is running.
+
 ---
 
 ## Credits & license
@@ -251,7 +254,7 @@ After changing the extension, reload it from `about:debugging` with the
 - Voice model: [Kokoro-82M](https://huggingface.co/hexgrad/Kokoro-82M) by hexgrad (Apache 2.0),
   run through [kokoro-js](https://www.npmjs.com/package/kokoro-js) and
   [Transformers.js](https://github.com/huggingface/transformers.js).
-- MP3 encoding: [lamejs](https://github.com/breezystack/lamejs) (LGPL 3.0).
+- MP3 encoding: [lamejs](https://github.com/shijinyu/lamejs) (LGPL 3.0).
 
 HTB Reader is released under the [MIT License](LICENSE).
 
