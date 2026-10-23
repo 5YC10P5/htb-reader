@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HTB Reader settings</title>
+    <link rel="stylesheet" href="../lib/ui.css" />
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <img src="../icons/icon.svg" alt="" width="36" height="36" />
+        <div>
+          <h1>HTB Reader settings</h1>
+          <p class="muted">Changes save automatically.</p>
+        </div>
+        <span id="saved" class="saved" aria-live="polite"></span>
+      </header>
+
+      <section class="card">
+        <h2>Voice server</h2>
+        <p class="server-line"><span id="server-dot" class="dot"></span> <span id="server-status">Checking...</span></p>
+        <p class="muted">
+          The voice runs on your own PC. Start it with <code>start.bat</code> (Windows) or <code>start.sh</code> (Mac/Linux) in the HTB Reader folder, and keep its window
+          open while you listen.
+        </p>
+        <details>
+          <summary>Advanced</summary>
+          <label class="field">
+            <span>Server address</span>
+            <input id="serverUrl" type="url" spellcheck="false" />
+          </label>
+        </details>
+      </section>
+
+      <section class="card">
+        <h2>Voice</h2>
+        <label class="field">
+          <span>Voice</span>
+          <select id="voice"></select>
+        </label>
+        <label class="field">
+          <span>Speed <b id="speed-value"></b></span>
+          <input id="speed" type="range" min="0.5" max="2.5" step="0.1" />
+        </label>
+        <label class="field">
+          <span>Volume <b id="volume-value"></b></span>
+          <input id="volume" type="range" min="0" max="1" step="0.05" />
+        </label>
+        <div class="test">
+          <input id="test-text" type="text" value="Let's scan the target with nmap -sV -sC 10.129.2.49 and check for SMB on port 445." />
+          <button id="test" class="primary">Test voice</button>
+          <button id="test-stop">Stop</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Reading</h2>
+        <fieldset>
+          <legend>Code blocks</legend>
+          <label><input type="radio" name="codeMode" value="announce" /> Say "terminal example shown on screen" <span class="muted">(recommended)</span></label>
+          <label><input type="radio" name="codeMode" value="short" /> Read short commands aloud, announce long blocks</label>
+          <label><input type="radio" name="codeMode" value="skip" /> Skip code blocks silently</label>
+        </fieldset>
+        <fieldset>
+          <legend>Tables</legend>
+          <label><input type="radio" name="tableMode" value="read" /> Read tables row by row (large tables are only announced)</label>
+          <label><input type="radio" name="tableMode" value="announce" /> Only say that a table is shown</label>
+          <label><input type="radio" name="tableMode" value="skip" /> Skip tables</label>
+        </fieldset>
+        <label class="check"><input id="autoScroll" type="checkbox" /> Scroll the page to follow along</label>
+        <label class="check"><input id="resume" type="checkbox" /> Remember where I stopped in each section</label>
+        <label class="check"><input id="autoAdvance" type="checkbox" /> Go to the next section automatically when one ends</label>
+        <label class="check"><input id="showPanel" type="checkbox" /> Show the floating player on HTB Academy</label>
+      </section>
+
+      <section class="card">
+        <h2>Pronunciation</h2>
+        <p class="muted">
+          Fix how words are said. One per line, written as <code>word = how to say it</code>. Your entries override the built-in
+          ones. Lines starting with <code>#</code> are ignored.
+        </p>
+        <textarea id="pronunciations" rows="8" spellcheck="false" placeholder="kerbrute = curb brute&#10;impacket = imp-packet"></textarea>
+        <div class="test">
+          <input id="preview-input" type="text" value="Run sudo nmap -p- --min-rate 5000 10.129.2.49 -oN scan.txt" />
+          <button id="preview">Preview</button>
+        </div>
+        <p class="preview-out"><span class="muted">Spoken as:</span> <span id="preview-out"></span></p>
+        <details>
+          <summary>Built-in pronunciations</summary>
+          <pre id="defaults"></pre>
+        </details>
+      </section>
+
+      <section class="card">
+        <h2>Saving audio</h2>
+        <p class="muted">"Save audio" in the floating player turns the whole section into one audio file you can play on your phone.</p>
+        <label class="check"><input type="radio" name="exportFormat" value="mp3" /> MP3 (small files)</label>
+        <label class="check"><input type="radio" name="exportFormat" value="wav" /> WAV (larger, best quality)</label>
+      </section>
+
+      <section class="card">
+        <h2>Keyboard shortcuts</h2>
+        <table class="keys">
+          <tr><td><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd></td><td>Play / pause</td></tr>
+          <tr><td><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>→</kbd> / <kbd>←</kbd></td><td>Next / previous paragraph</td></tr>
+          <tr><td><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>↑</kbd> / <kbd>↓</kbd></td><td>Faster / slower</td></tr>
+          <tr><td>Media keys and headphone buttons</td><td>Play / pause, next, previous</td></tr>
+          <tr><td>Right-click on a lesson</td><td>"HTB Reader: read from here"</td></tr>
+          <tr><td>Select text on any site, right-click</td><td>"Read aloud with HTB Reader"</td></tr>
+        </table>
+        <p class="muted">To change these, open <code>about:addons</code>, click the gear icon, and choose "Manage Extension Shortcuts".</p>
+      </section>
+
+      <section class="card">
+        <h2>Saved places</h2>
+        <p class="muted">HTB Reader remembers where you stopped in <b id="positions-count">0</b> sections.</p>
+        <button id="clear-positions">Forget all saved places</button>
+      </section>
+    </main>
+
+    <script src="../lib/speech-text.js"></script>
+    <script src="../lib/settings.js"></script>
+    <script src="options.js"></script>
+  </body>
+</html>

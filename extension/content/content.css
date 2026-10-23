@@ -1,0 +1,251 @@
+/* HTB Reader: the paragraph being read */
+.htbr-reading {
+  background-color: rgba(159, 239, 0, 0.1) !important;
+  box-shadow: 0 0 0 2px rgba(159, 239, 0, 0.6), 0 0 0 6px rgba(159, 239, 0, 0.1) !important;
+  border-radius: 4px !important;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+/* Floating player. Everything is scoped under #htbr-root so HTB's styles
+   don't leak in and ours don't leak out. */
+#htbr-root {
+  all: initial;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 2147483000;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #a4b1cd;
+}
+#htbr-root[hidden] {
+  display: none !important;
+}
+#htbr-root *,
+#htbr-root *::before,
+#htbr-root *::after {
+  box-sizing: border-box;
+}
+#htbr-root button {
+  all: unset;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  color: inherit;
+  font: inherit;
+}
+#htbr-root button:focus-visible {
+  outline: 2px solid #9fef00;
+  outline-offset: 2px;
+}
+#htbr-root button[disabled] {
+  opacity: 0.4;
+  cursor: default;
+}
+#htbr-root button[hidden] {
+  display: none;
+}
+
+#htbr-root .htbr-panel {
+  width: 264px;
+  background: #1a2332;
+  border: 1px solid #2c3a50;
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  padding: 10px 12px 10px;
+}
+#htbr-root .htbr-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  margin-bottom: 4px;
+}
+#htbr-root .htbr-head:active {
+  cursor: grabbing;
+}
+#htbr-root .htbr-logo {
+  display: inline-flex;
+  color: #9fef00;
+}
+#htbr-root .htbr-title {
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 13px;
+  flex: 1;
+}
+#htbr-root .htbr-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #6b7a95;
+  margin-right: 4px;
+}
+#htbr-root .htbr-dot.htbr-ok {
+  background: #9fef00;
+}
+#htbr-root .htbr-dot.htbr-bad {
+  background: #ff3e3e;
+}
+#htbr-root .htbr-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  color: #a4b1cd;
+}
+#htbr-root .htbr-icon:hover {
+  background: #26334a;
+  color: #ffffff;
+}
+
+#htbr-root .htbr-status {
+  min-height: 18px;
+  font-size: 12px;
+  color: #a4b1cd;
+  margin: 2px 0 8px;
+}
+#htbr-root .htbr-status.htbr-error {
+  color: #ff8a8a;
+}
+
+#htbr-root .htbr-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+#htbr-root .htbr-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: #cfd8e8;
+}
+#htbr-root .htbr-btn:hover {
+  background: #26334a;
+  color: #ffffff;
+}
+#htbr-root .htbr-btn.htbr-play {
+  width: 50px;
+  height: 50px;
+  background: #9fef00;
+  color: #141d2b;
+}
+#htbr-root .htbr-btn.htbr-play:hover {
+  background: #b6ff2a;
+  color: #141d2b;
+}
+
+#htbr-root .htbr-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+#htbr-root .htbr-speed {
+  display: inline-flex;
+  align-items: center;
+  background: #141d2b;
+  border: 1px solid #2c3a50;
+  border-radius: 8px;
+  overflow: hidden;
+}
+#htbr-root .htbr-mini {
+  width: 28px;
+  height: 26px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #cfd8e8;
+}
+#htbr-root .htbr-mini:hover {
+  background: #26334a;
+}
+#htbr-root .htbr-speed-value {
+  min-width: 40px;
+  text-align: center;
+  color: #ffffff;
+  font-variant-numeric: tabular-nums;
+}
+#htbr-root .htbr-progress {
+  font-variant-numeric: tabular-nums;
+  color: #6b7a95;
+  font-size: 12px;
+}
+#htbr-root .htbr-chips {
+  margin-top: 8px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+#htbr-root .htbr-chip {
+  height: 26px;
+  padding: 0 9px;
+  border-radius: 13px;
+  border: 1px solid #2c3a50;
+  font-size: 12px;
+  color: #cfd8e8;
+}
+#htbr-root .htbr-chip:hover {
+  border-color: #9fef00;
+  color: #ffffff;
+}
+#htbr-root .htbr-tip {
+  margin-top: 8px;
+  font-size: 11px;
+  color: #6b7a95;
+}
+
+/* Minimized: just a round button */
+#htbr-root .htbr-fab {
+  display: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #1a2332;
+  border: 2px solid #9fef00;
+  color: #9fef00;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+#htbr-root.htbr-collapsed .htbr-panel {
+  display: none;
+}
+#htbr-root.htbr-collapsed .htbr-fab {
+  display: inline-flex;
+}
+#htbr-root.htbr-collapsed.htbr-playing .htbr-fab {
+  background: #9fef00;
+  color: #141d2b;
+}
+
+/* "Read from here" button next to the hovered paragraph */
+#htbr-root .htbr-hover-play {
+  position: fixed;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #9fef00;
+  color: #141d2b;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+}
+#htbr-root .htbr-hover-play.htbr-show {
+  opacity: 0.9;
+  pointer-events: auto;
+}
+#htbr-root .htbr-hover-play:hover {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .htbr-reading,
+  #htbr-root .htbr-hover-play {
+    transition: none;
+  }
+}

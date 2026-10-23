@@ -1,0 +1,41 @@
+name: Bug report
+description: Something doesn't work, or HTB Reader reads the wrong part of a page.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! Please **don't paste lesson text** from HTB Academy. A section URL is enough.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: HTB Academy section URL
+      placeholder: https://academy.hackthebox.com/app/module/.../section/...
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open the section
+        2. Press play
+        3. ...
+  - type: textarea
+    id: errors
+    attributes:
+      label: Errors
+      description: Any errors from the browser console (Ctrl+Shift+K on the page) or the voice server window.
+      render: text
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      placeholder: "HTB Reader 1.0.0, Firefox 150, Windows 11, Node.js 22"
+    validations:
+      required: true

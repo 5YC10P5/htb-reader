@@ -1,0 +1,33 @@
+{
+  "name": "htb-reader",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Listen to Hack The Box Academy lessons in a natural voice, using the free Kokoro voice model on your own computer.",
+  "author": "5YC10P5",
+  "license": "MIT",
+  "homepage": "https://github.com/5YC10P5/htb-reader",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/5YC10P5/htb-reader.git"
+  },
+  "bugs": "https://github.com/5YC10P5/htb-reader/issues",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server/server.mjs",
+    "test": "node tests/content.test.mjs",
+    "test:player": "node tests/background.test.mjs",
+    "lint": "web-ext lint --source-dir extension",
+    "benchmark": "node server/benchmark.mjs fp16 8 fp32 4"
+  },
+  "type": "commonjs",
+  "dependencies": {
+    "@breezystack/lamejs": "^1.2.7",
+    "kokoro-js": "^1.2.1"
+  },
+  "devDependencies": {
+    "jsdom": "^30.1.3",
+    "web-ext": "^10.8.0"
+  }
+}

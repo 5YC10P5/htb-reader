@@ -1,0 +1,24 @@
+name: Pronunciation fix
+description: A tool, command, flag or term is pronounced wrong.
+labels: [pronunciation]
+body:
+  - type: input
+    id: word
+    attributes:
+      label: Word or text as written
+      placeholder: kerbrute
+    validations:
+      required: true
+  - type: input
+    id: heard
+    attributes:
+      label: How it's said now
+      placeholder: "ker-brutt"
+  - type: input
+    id: should
+    attributes:
+      label: How it should be said
+      description: Written the way you'd add it in Settings → Pronunciation.
+      placeholder: "curb brute"
+    validations:
+      required: true

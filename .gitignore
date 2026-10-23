@@ -1,0 +1,29 @@
+# Installed packages and the downloaded voice model
+node_modules/
+models/
+
+# Build output
+dist/
+web-ext-artifacts/
+*.xpi
+
+# Saved web pages (lesson content belongs to Hack The Box; never commit it)
+*.htm
+*.html
+!extension/**/*.html
+*_files/
+
+# Audio you generate locally (except the demo sample)
+*.wav
+*.mp3
+!samples/voice-sample.mp3
+
+# Logs and OS files
+*.log
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor and tool folders
+.vscode/
+.idea/
