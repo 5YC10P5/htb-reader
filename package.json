@@ -19,6 +19,7 @@
     "test": "node tests/content.test.mjs",
     "test:player": "node tests/background.test.mjs",
     "lint": "web-ext lint --source-dir extension",
+    "build": "web-ext build --source-dir extension --artifacts-dir dist --filename htb-reader-{version}.xpi --overwrite-dest",
     "benchmark": "node server/benchmark.mjs fp16 8 fp32 4"
   },
   "type": "commonjs",

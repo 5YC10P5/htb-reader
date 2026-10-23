@@ -278,10 +278,11 @@
     for (const node of document.querySelectorAll("a, button")) {
       if (node.closest("#htbr-root") || !isVisible(node) || node.disabled) continue;
       const t = clean(`${node.textContent} ${node.getAttribute("aria-label") || ""}`).toLowerCase();
-      if (!t || t.length > 50 || /prev/.test(t)) continue;
+      // Never press buttons that change account progress (e.g. "Mark Complete & Next").
+      if (!t || t.length > 50 || /prev|complete|submit|finish|reset|start|spawn/.test(t)) continue;
       let score = 0;
       if (/^next( section)?$/.test(t)) score = 3;
-      else if (/complete.*next|next.*section/.test(t)) score = 2;
+      else if (/next.*section/.test(t)) score = 2;
       else if (/\bnext\b/.test(t)) score = 1;
       if (score >= bestScore && score > 0) {
         best = node;

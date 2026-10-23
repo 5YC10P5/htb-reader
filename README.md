@@ -73,16 +73,42 @@ work offline.
 > automatically (minimized) when you log in. `autostart-off.bat` undoes it,
 > and `stop-server.bat` stops a server that's running in the background.
 
-### 3. Install the Firefox extension
+### 3. Load the extension in Firefox
 
-**Easiest:** download the latest `.xpi` file from the
-[Releases page](https://github.com/5YC10P5/htb-reader/releases), then drag it
-onto a Firefox window and click **Add**. It's signed by Mozilla and stays
-installed.
+HTB Reader isn't on the Firefox Add-ons store. You load it straight from the
+folder you downloaded, so you can read every line of code you're running.
 
-**From source (temporary, for testing):** open
-`about:debugging#/runtime/this-firefox`, click **Load Temporary Add-on...** and
-select `extension/manifest.json`. Firefox removes it when it restarts.
+1. Open Firefox and type `about:debugging#/runtime/this-firefox` in the address bar.
+2. Click **Load Temporary Add-on...**
+3. Open the `extension` folder and select **`manifest.json`**.
+
+HTB Reader now appears in your toolbar.
+
+> **Firefox removes temporary add-ons when it closes**, so repeat these three
+> steps after each Firefox restart (it takes about 10 seconds). Your settings
+> may also reset when that happens.
+
+<details>
+<summary><b>Optional: keep it installed permanently (Firefox Developer Edition or Nightly)</b></summary>
+
+Regular Firefox only keeps add-ons signed by Mozilla. Firefox
+[Developer Edition](https://www.mozilla.org/firefox/developer/) and
+[Nightly](https://www.mozilla.org/firefox/channel/desktop/#nightly) can keep
+unsigned ones:
+
+1. Type `about:config` in the address bar, search for
+   `xpinstall.signatures.required`, and set it to **false**.
+2. Build the add-on file in the HTB Reader folder:
+   ```bash
+   npm install
+   npm run build
+   ```
+3. Open `about:addons`, click the gear icon → **Install Add-on From File...**, and
+   pick the `.xpi` file in the `dist` folder.
+
+Turning off signature checks applies to every add-on in that browser, so only
+install add-ons you trust there.
+</details>
 
 ### 4. Listen
 
@@ -171,10 +197,22 @@ Firefox (HTB Academy page)                 Your computer
 └──────────────────────────┘
 ```
 
-- The server only listens on `127.0.0.1` and only accepts requests from
-  browser extensions. Regular websites can't use it.
-- The only network download is the one-time voice model download from
-  Hugging Face.
+### Privacy & security
+
+- **Lesson text stays on your computer.** The extension only sends it to the
+  voice server on your own machine. No analytics, no tracking, no accounts.
+- **The server only listens on `127.0.0.1`.** Other devices on your network can't reach it.
+- **Websites can't use the server.** It only answers requests from browser extensions,
+  and it checks the address it was reached at, which blocks DNS-rebinding tricks.
+- **The only downloads** are the npm packages on first start and the one-time
+  voice model download from Hugging Face.
+- **HTB Reader never logs in, clicks, submits or scrapes anything on its own.**
+  It only reads the page you have open. The one exception is the optional
+  auto-advance setting, which clicks the section's plain "Next" button. It never
+  presses "Mark Complete" or any other button that changes your progress.
+- **About `npm audit` warnings:** `npm audit` reports issues in `sharp`, an image
+  library the voice engine installs. HTB Reader never processes images, so that
+  code never runs.
 
 ### Project layout
 
@@ -200,11 +238,11 @@ npm install          # install everything, including dev tools
 npm test             # page-reading test (no server needed)
 npm run test:player  # playback test (start the server first)
 npm run lint         # Mozilla's extension validator
+npm run build        # package the extension as dist/htb-reader-<version>.xpi
 ```
 
-To build a signed `.xpi` (needs free addons.mozilla.org API keys), run
-`sign-extension.bat` or `./sign-extension.sh`. Increase `version` in
-`extension/manifest.json` and `package.json` before signing a new release.
+After changing the extension, reload it from `about:debugging` with the
+**Reload** button next to HTB Reader.
 
 ---
 
